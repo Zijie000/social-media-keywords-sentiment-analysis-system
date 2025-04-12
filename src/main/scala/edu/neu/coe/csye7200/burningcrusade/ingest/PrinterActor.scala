@@ -1,4 +1,4 @@
-package edu.neu.coe.csye7200.burningcrusade.visualize
+package edu.neu.coe.csye7200.burningcrusade.ingest
 
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.Behaviors

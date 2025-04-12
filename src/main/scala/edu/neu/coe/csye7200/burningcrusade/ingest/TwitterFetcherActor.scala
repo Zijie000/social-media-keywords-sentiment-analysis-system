@@ -27,7 +27,7 @@ object TwitterFetcherActor {
             println("[Fetcher] Fetch command received.")
 
             val bearerToken = "AAAAAAAAAAAAAAAAAAAAAFKu0QEAAAAA5YEJc9tYLMHK3VUAQC%2BbIDalSCM%3DTQMuCtCzT9oERr0J2BHPpnHJQ5fFZVWQQ0FOMvJyS9IJRAxqyu" // 替换为你的 token
-            val url = uri"https://api.twitter.com/2/tweets/search/recent?query=scala&max_results=10"
+            val url = uri"https://api.twitter.com/2/tweets/search/all?max_results=10&start_time=2025-02-01T00%3A00%3A00Z&end_time=2025-04-01T00%3A00%3A00Z&query=trump"
 
 
             val request = basicRequest
