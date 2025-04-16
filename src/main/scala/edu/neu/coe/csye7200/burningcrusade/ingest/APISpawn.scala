@@ -18,7 +18,7 @@ object APISpawn {
         query = "trump",
         publishedAfter = LocalDate.now().minusDays(30).toString + "T00:00:00Z",
         publishedBefore = LocalDate.now().minusDays(1).toString + "T00:00:00Z",
-        apiKey = "AIzaSyCGPEvV6aHJEZygEhiLuFBDs3oMAkOlAwI",
+        apiKey = "", //Zijie 的key
         maxResults = 3,
       )
       val twitterFetcher = context.spawn(YoutubeFetcherActor(printer, ytbCfg), "YoutubeFetcher")
