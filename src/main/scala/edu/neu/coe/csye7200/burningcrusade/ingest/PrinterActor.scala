@@ -11,7 +11,7 @@ object PrinterActor {
 
     Behaviors.receiveMessage { message =>
       // 写入文件
-      bw.write(s"[Tweet]: $message\n")
+      bw.write(s"Printer: $message\n")
       bw.flush()
       // 不要关闭 bw，因为 Actor 可能一直要写
       Behaviors.same

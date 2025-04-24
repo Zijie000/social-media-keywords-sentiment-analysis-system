@@ -30,6 +30,7 @@ object YoutubeFetcherActor {
   }
 
   case class Config(
+    name: String,
     query: String,
     publishedAfter: String,   // 例如 "2025-04-01T00:00:00Z"
     publishedBefore: String,  // 例如 "2025-04-15T00:00:00Z"
@@ -110,11 +111,10 @@ object YoutubeFetcherActor {
   }
 
   private def fetchDaily(
-    downstream: ActorRef[String],
+    downstream: ActorRef[KafkaProducerActor.Publish],
     config: Config
   ): Unit = {
-    //val today = LocalDate.now()
-    //val yesterday = today.minusDays(1)
+    println(s"${config.name} Youtube Actor is running")
 
     // 伪代码: searchVideos => comments => 下游
     val videoIds = searchVideos(
@@ -131,12 +131,12 @@ object YoutubeFetcherActor {
         videoId = vid
       )
       comments.foreach { c =>
-        downstream ! c
+        downstream ! KafkaProducerActor.Publish(s"[YTB ${config.name}] ${c}")
       }
     }
   }
 
-  def apply(printer: ActorRef[String], config: Config): Behavior[Command] = {
+  def apply(printer: ActorRef[KafkaProducerActor.Publish], config: Config): Behavior[Command] = {
     Behaviors.withTimers { (timers: TimerScheduler[Command]) =>
       // 启动定时器，每 10 秒触发一次 Fetch 消息
       timers.startTimerWithFixedDelay(Fetch, Fetch, 10.seconds)
@@ -148,7 +148,7 @@ object YoutubeFetcherActor {
 
         Behaviors.receiveMessage {
           case Fetch =>
-            
+  
             fetchDaily(printer, config)
 
             Behaviors.same
